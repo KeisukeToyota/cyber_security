@@ -106,12 +106,12 @@ def client_sender(buffer):
                 if recv_len < 4096:
                     break
 
-            print(response)
+            print(response.decode('utf-8'))
 
             buffer = input()
             buffer += '\n'
 
-            client.send(buffer)
+            client.send(buffer.encode('utf-8'))
 
     except:
         print('[*] Exception! Exiting.')
@@ -181,12 +181,12 @@ def client_handler(client_socket):
         client_socket.send(output)
 
     if command:
-        prompt = '<BHP:#> '
+        prompt = b'<BHP:#> '
         client_socket.send(prompt)
 
         while True:
-            cmd_buffer = ''
-            while '\n' not in cmd_buffer:
+            cmd_buffer = b''
+            while b'\n' not in cmd_buffer:
                 cmd_buffer += client_socket.recv(1024)
 
             response = run_command(cmd_buffer)
